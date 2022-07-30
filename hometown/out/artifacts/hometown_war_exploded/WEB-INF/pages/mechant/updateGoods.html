@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>修改商品</title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bookManger.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/register.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/book_edit.css}"/>
+    <base th:href="@{/}">
+</head>
+<body>
+
+<div class="login_banner" style="background-color: #ece3e3;">
+    <div class="register_form" >
+
+
+        <form th:action="@{/goods.do(operate='updateGoods')}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" th:value="${session.thisGoods.id}" />
+
+            <div class="form-item">
+                <div>
+                    <label>商品图片:</label>
+                    <input type="file" name="photo"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>标题:</label>
+                    <input type="text" name="title" th:value="${session.thisGoods.title}"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>内容:</label>
+                    <input type="" name="content" th:value="${session.thisGoods.detail_content}"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>价格:</label>
+                    <input type="" name="price" th:value="${session.thisGoods.price}"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>类别:</label>
+                    <!--                    <input type="" name="status"/>-->
+                    <select name="sort" style="width: 100px">
+                        <option th:each="category :${session.categoryAll}"  name="sort" th:value="${category.id}" th:text="${category.sort}"  th:selected="${category.id}==${session.thisGoods.category.id}">未找到</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>库存:</label>
+                    <input type="" name="sum" th:value="${session.thisGoods.sum}"/>
+                </div>
+            </div>
+            <button class="btn" type="submit">提交</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

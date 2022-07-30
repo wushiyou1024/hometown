@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>评论</title>
+    <link rel="stylesheet" th:href="@{/static/css/code.css}"/>
+
+    <script language="JavaScript" th:src="@{/static/script/vue.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/order.js}"></script>
+
+</head>
+<body>
+<div class="comments">
+
+
+
+    <div class="comment-wrap">
+        <div class="photo" >
+            <img class="avatar"  th:src="@{|/static/uploads/${session.goodsGid.img}|}" alt=""/>
+<!--            <div class="avatar"  style="background-image: url('@{|/static/uploads/${orderItem.getGid().getImg()}|}')"></div>-->
+        </div>
+        <div class="comment-block">
+            <p class="comment-text" th:text="${'商品名：'+session.goodsGid.title+'，介绍：'+session.goodsGid.detail_content}">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Iusto temporibus iste nostrum dolorem natus recusandae incidunt voluptatum. Eligendi voluptatum ducimus architecto tempore, quaerat explicabo veniam fuga corporis totam reprehenderit
+                quasi sapiente modi tempora at perspiciatis mollitia, dolores voluptate. Cumque, corrupti?</p>
+            <div class="bottom-comment" >
+                <div class="comment-date" th:text="${'单价：'+session.goodsGid.price+'，数量：'+session.OrderItemByGid.buyCount}"></div>
+                <ul class="comment-actions">
+                    <li class="complain" th:text="${session.sortByid.sort}">Complain</li>
+                    <li class="reply" th:text="${session.mnameByid.mname}">Reply</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="comment-wrap">
+        <div class="photo">
+            <div class="avatar" style="background-image: url('./static/img/goods.jpg')">
+
+            </div>
+        </div>
+        <div class="comment-block" id="contentc">
+            <form action="" method="post"  @submit.prevent="submit()" >
+                <textarea v-model="content" name="" cols="30" rows="3" placeholder="Say somthing..."></textarea>
+                <button type="submit">评论</button>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>个人中心</title>
+  <link rel="stylesheet" th:href="@{/static/css/minireset.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/cart.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/bookManger.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/register.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/book_edit.css}"/>
+  <script language="JavaScript" th:src="@{/static/script/vue.js}"></script>
+  <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+  <script language="JavaScript" th:src="@{/static/script/user.js}"></script>
+  <base th:href="@{/}">
+</head>
+<body>
+<div class="header">
+  <div class="w">
+    <div class="header-left">
+      <a th:href="@{/index.html}">
+        <img th:src="@{static/img/logo.gif}" alt=""
+        /></a>
+      <h1>我的空间</h1>
+    </div>
+    <div class="header-right">
+      <h3>当前用户：<span th:text="${session.currUser.uname}">张总</span></h3>
+<!--      <div class="order"><a th:href="@{/page.do(operate='page',page='manager/book_manager')}">我的失物招领</a></div>-->
+<!--      <div class="destory"><a th:href="@{/page.do(operate='page',page='manager/look_manager')}">我的寻物启事</a></div>-->
+      <div class="gohome">
+        <a th:href="@{/page.do(operate='page',page='index')}" class="cart iconfont icon-gouwuche">回到主页</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="login_banner">
+  <div class="register_form" id="userTable">
+    <form method="post" action="" @submit.prevent="submit(user)">
+      <div class="form-item">
+        <div>
+          <label>用户名:</label>
+          <input disabled="disabled" type="text" v-model:value="user.uname"/>
+        </div>
+      </div>
+      <div class="form-item">
+        <div>
+          <label>密码:</label>
+          <input type="text" v-model:value="user.pwd"/>
+        </div>
+      </div>
+      <div class="form-item">
+        <div>
+          <label>联系电话:</label>
+          <input type="text" v-model:value="user.phone"/>
+        </div>
+      </div>
+      <div class="form-item">
+        <div>
+          <label>微信号码:</label>
+          <input type="text" v-model:value="user.wechat"/>
+        </div>
+      </div>
+      <div class="form-item">
+        <div>
+          <label>真实姓名:</label>
+          <input type="text" v-model:value="user.realName"/>
+        </div>
+      </div>
+      <div class="form-item">
+        <div>
+          <label>邮箱:</label>
+          <input type="text" v-model:value="user.email"/>
+        </div>
+      </div>
+
+      <button class="btn" type="submit">修改</button>
+
+    </form>
+  </div>
+</div>
+<div class="bottom">
+  厦门理工家乡味商城系统.Copyright &copy;2022
+</div>
+</body>
+<html>

@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bookManger.css}"/>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/register.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/book_edit.css}"/>
+    <script th:src="@{/static/layui/layui.js}"></script>
+
+    <script language="JavaScript" th:src="@{/static/script/vue.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/orderManager.js}"></script>
+    <style>
+        .black_overlay {
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: .80;
+            filter: alpha(opacity=88);
+        }
+
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 55%;
+            height: 55%;
+            padding: 20px;
+            border: 5px solid #0c8c57;
+            background-color: white;
+            z-index: 1002;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="list" id="commented">
+
+    <div id="light" class="white_content">
+        <i class="layui-icon layui-icon-close" style="font-size: 40px;" @click="clearSort()"></i>
+        <div class="login_banner" style="background-color: #ece3e3;">
+            <div class="register_form" style="height: 100%;width: 100%">
+
+                <form action="" @submit.prevent="submit()" method="post">
+                    <div class="form-item">
+                        <div>
+                            <label>订单id:</label>
+                            <input disabled type="text" name="id" v-model="id"/>
+                        </div>
+                    </div>
+                    <div class="form-item">
+                        <div>
+                            <label>新的单号:</label>
+                            <input type="text" name="reply" v-model="reply"/>
+                        </div>
+                    </div>
+                    <button class="btn" type="submit">提交</button>
+                </form>
+
+            </div>
+        </div>
+
+    </div>
+    <div id="fade" class="black_overlay"></div>
+    <div class="w">
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>图片</th>
+                <th>商品名</th>
+                <th>总数</th>
+                <th>单价</th>
+                <th>总价</th>
+                <th>单号</th>
+                <th>发货地址</th>
+                <th>状态</th>
+                <th>修改单号</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="goodsItem in goods.orderedList">
+                <td>{{goodsItem.id}}</td>
+                <td>
+                    <img v-bind:src="'static/uploads/'+goodsItem.img" alt="">
+                </td>
+                <td>{{goodsItem.gname}}</td>
+                <td>
+                    {{goodsItem.total}}
+                </td>
+
+                <td>
+                    {{goodsItem.price}}
+                </td>
+
+                <td>
+                    {{goodsItem.totalMoney}}
+                </td>
+                <td>
+                    {{goodsItem.expressNo}}
+                </td>
+                <td>
+                    {{goodsItem.express}}
+                </td>
+                <td>
+                    {{goodsItem.status}}
+                </td>
+                <td>
+                    <button @click="popReply(goodsItem.id)" type="button" class="layui-btn"><i
+                            class="layui-icon layui-icon-edit" style="font-size: 30px; color: #1E9FFF;"></i>
+                    </button>
+                </td>
+
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="footer">
+            <div class="footer-right" style="font-size: 8px">
+                <button @click="page(1)" v-bind:disabled="goods.page==1">首页</button>
+                <button @click="page(goods.page-1)" v-bind:disabled="goods.page==1">上一页</button>
+                <button @click="page(goods.page+1)" v-bind:disabled="goods.page==goods.pageCount">下一页</button>
+                <button @click="page(goods.pageCount)" v-bind:disabled="goods.page==goods.pageCount">末页</button>
+                <span>共{{goods.pageCount}}页</span>
+                <span>{{goods.count}}条记录</span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

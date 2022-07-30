@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE beans [
+        <!ELEMENT beans (bean*)>
+        <!ELEMENT bean (property*)>
+        <!ELEMENT property (#PCDATA)>
+
+        <!ATTLIST bean id ID #REQUIRED>
+        <!ATTLIST bean class CDATA #IMPLIED>
+        <!ATTLIST property name CDATA #IMPLIED>
+        <!ATTLIST property ref IDREF #IMPLIED>
+        ]>
+
+<beans>
+    <bean id="page" class="com.atguigu.myssm.myspringmvc.PageController"/>
+
+    <!--    DAO-->
+    <bean id="goodsDAO" class="com.atguigu.home.dao.Impl.GoodsDAOImpl"></bean>
+    <bean id="orderDAONoItem" class="com.atguigu.home.dao.Impl.OrderDAOImpl"></bean>
+    <bean id="userDAO" class="com.atguigu.home.dao.Impl.UserDAOImpl"></bean>
+    <bean id="cartDAO" class="com.atguigu.home.dao.Impl.CartDAOImpl"></bean>
+    <bean id="merchantDAO" class="com.atguigu.home.dao.Impl.MerchantDAOImpl"></bean>
+    <bean id="categoryDAO" class="com.atguigu.home.dao.Impl.CategoryDAOImpl"></bean>
+    <bean id="orderDAO" class="com.atguigu.home.dao.Impl.OrderItemDAOImpl"></bean>
+    <bean id="commentDAO" class="com.atguigu.home.dao.Impl.CommentDAOImpl"></bean>
+    <bean id="inforDAO" class="com.atguigu.home.dao.Impl.InforDAOImpl"></bean>
+    <bean id="cartItemDAO" class="com.atguigu.home.dao.Impl.CartItemDAOImpl"></bean>
+    <bean id="replyDAO" class="com.atguigu.home.dao.Impl.ReplyDAOImpl"></bean>
+    <bean id="addressDAO" class="com.atguigu.home.dao.Impl.AddressDAOImpl"></bean>
+    <!--    service-->
+
+    <bean id="categoryService" class="com.atguigu.home.service.impl.CategoryServiceImpl">
+        <property name="categoryDAO" ref="categoryDAO"></property>
+    </bean>
+    <bean id="goodsService" class="com.atguigu.home.service.impl.GoodsServiceImpl">
+        <property name="goodsDAO" ref="goodsDAO"></property>
+        <property name="categoryService" ref="categoryService"></property>
+        <property name="merchantService" ref="merchantService"></property>
+    </bean>
+    <bean id="userService" class="com.atguigu.home.service.impl.UserServiceImpl">
+        <property name="userDAO" ref="userDAO"></property>
+    </bean>
+    <bean id="cartService" class="com.atguigu.home.service.impl.CartServiceImpl">
+        <property name="cartDAO" ref="cartDAO"></property>
+    </bean>
+    <bean id="merchantService" class="com.atguigu.home.service.impl.MerchantServiceImpl">
+        <property name="merchantDAO" ref="merchantDAO"></property>
+
+    </bean>
+    <bean id="orderItemService" class="com.atguigu.home.service.impl.OrderItemServiceImpl">
+        <property name="orderItemDAO" ref="orderDAO"></property>
+    </bean>
+    <bean id="commentService" class="com.atguigu.home.service.impl.CommentServiceImpl">
+        <property name="commentDAO" ref="commentDAO"></property>
+    </bean>
+    <bean id="inforService" class="com.atguigu.home.service.impl.infoServiceImpl">
+        <property name="inforDAO" ref="inforDAO"></property>
+    </bean>
+    <bean id="cartItemService" class="com.atguigu.home.service.impl.CartItemServiceImpl">
+        <property name="cartItemDAO" ref="cartItemDAO"></property>
+    </bean>
+    <bean id="replyService" class="com.atguigu.home.service.impl.ReplyServiceImpl">
+        <property name="replyDAO" ref="replyDAO"></property>
+    </bean>
+    <bean id="addressService" class="com.atguigu.home.service.impl.AddressServiceImpl">
+        <property name="addressDAO" ref="addressDAO"></property>
+    </bean>
+    <bean id="orderService" class="com.atguigu.home.service.impl.OrderServiceImpl">
+        <property name="orderDAO" ref="orderDAONoItem"></property>
+        <property name="orderItemDAO" ref="orderDAO"></property>
+        <property name="cartItemDAO" ref="cartItemDAO"></property>
+    </bean>
+    <!--     controller-->
+    <bean id="address" class="com.atguigu.home.controller.AddressController">
+        <property name="addressService" ref="addressService"></property>
+    </bean>
+    <bean id="goods" class="com.atguigu.home.controller.GoodsController">
+        <property name="goodsService" ref="goodsService"></property>
+        <property name="categoryService" ref="categoryService"></property>
+        <property name="inforService" ref="inforService"></property>
+    </bean>
+    <bean id="user" class="com.atguigu.home.controller.UserController">
+        <property name="userService" ref="userService"></property>
+        <property name="cartService" ref="cartService"></property>
+        <property name="merchantService" ref="merchantService"></property>
+    </bean>
+    <bean id="merchant" class="com.atguigu.home.controller.MerchantController">
+        <property name="goodsService" ref="goodsService"></property>
+        <property name="orderItemService" ref="orderItemService"></property>
+        <property name="commentService" ref="commentService"></property>
+        <property name="inforService" ref="inforService"></property>
+        <property name="userService" ref="userService"></property>
+        <property name="replyService" ref="replyService"></property>
+        <property name="addressService" ref="addressService"></property>
+        <property name="merchantService" ref="merchantService"></property>
+    </bean>
+    <bean id="cart" class="com.atguigu.home.controller.CartController">
+        <property name="cartService" ref="cartService"></property>
+        <property name="goodsService" ref="goodsService"></property>
+        <property name="cartItemService" ref="cartItemService"></property>
+    </bean>
+    <bean id="sort" class="com.atguigu.home.controller.SortController">
+        <property name="categoryService" ref="categoryService"></property>
+    </bean>
+    <bean id="order" class="com.atguigu.home.controller.OrderController">
+        <property name="orderService" ref="orderService"/>
+        <property name="goodsService" ref="goodsService"/>
+        <property name="orderItemService" ref="orderItemService"/>
+        <property name="addressService" ref="addressService"></property>
+        <property name="merchantService" ref="merchantService"></property>
+        <property name="categoryService" ref="categoryService"></property>
+        <property name="commentService" ref="commentService"></property>
+        <property name="replyService" ref="replyService"></property>
+    </bean>
+    <bean id="admin" class="com.atguigu.home.controller.AdminController">
+        <property name="inforService" ref="inforService"></property>
+    </bean>
+
+</beans>

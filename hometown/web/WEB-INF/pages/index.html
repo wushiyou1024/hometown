@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>书城首页</title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/iconfont.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/index.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/swiper.min.css}"/>
+    <script language="JavaScript" th:src="@{/static/script/vue.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/home.js}"></script>
+
+
+</head>
+<body>
+
+<div id="app">
+
+    <div class="topbar">
+        <div class="w">
+            <div class="topbar-left">
+                <i>送至:</i>
+                <i>厦门</i>
+                <i class="iconfont icon-ai-arrow-down"></i>
+            </div>
+            <!--没有登录的时候显示这边的样子-->
+            <div class="topbar-right" th:if="${session.currUser}==null">
+                <a href="user/login.html" class="login">登录</a>
+                <a href="user/regist.html" class="register">注册</a>
+                <a href="cart/cart.html" class="cart iconfont icon-gouwuche">
+                    购物车
+                    <div class="cart-num">3</div>
+                </a>
+            </div>
+
+            <div class="topbar-right" th:unless="${session.currUser}==null">
+                <!--          登录后风格-->
+                <span>欢迎你<b th:text="${session.currUser.getUname()}">张总</b></span>
+
+
+                <a onclick="" id="aw"  th:href="@{/user.do(operate='cancelUser')}" class="register">注销</a>
+
+
+
+                <a th:href="@{/cart.do}" class="cart iconfont icon-gouwuche">
+                    购物车
+                    <div class="cart-num" th:text="${session.currUser.cart.buyCount}">3</div>
+                </a>
+                <a th:href="@{/page.do(operate='page',page='user/center.html')}" class="admin">个人中心</a>
+            </div>
+        </div>
+    </div>
+    <div class="header w">
+        <a href="#" class="header-logo"></a>
+
+        <div class="header-search">
+            <form method="post" action="" @submit.prevent="submit">
+                <input class="search-input" type="text" placeholder="请输入你需要的商品名称 如：茶" v-model="keyword"/>
+                <input type="submit" class="search-button" value="查询"/>
+            </form>
+        </div>
+    </div>
+
+    <div class="banner w clearfix">
+        <div class="banner-left">
+            <ul v-for="categoryItem in goods.category">
+                <li>
+                    <a  @click="getSort(categoryItem.id)">
+                        <span>{{categoryItem.sort}}</span>
+                        <i class="iconfont icon-jiantou"></i>
+                    </a>
+
+                </li>
+            </ul>
+        </div>
+        <div class="banner-right">
+            <div class="swiper-container">
+                <ul class="swiper-wrapper">
+                    <li class="swiper-slide">
+                        <img src="./static/uploads/baner1.jpg" alt="">
+                        <!-- <div class="banner-img"></div> -->
+                    </li>
+                    <li class="swiper-slide">
+                        <img src="./static/uploads/banner5.jpg" alt="">
+                        <!-- <div class="banner-img"></div> -->
+                    </li>
+                    <li class="swiper-slide">
+                        <img src="./static/uploads/banner6.jpg" alt="">
+                        <!-- <div class="banner-img"></div> -->
+                    </li>
+                </ul>
+                <div class="swiper-button-prev"></div>
+
+                <div class="swiper-button-next"></div>
+
+                <!-- Add Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div>
+    </div>
+    <div class="books-list ">
+        <div class="w">
+            <div class="list">
+                <div class="list-header">
+                    <div class="title">商品列表</div>
+                    <div class="price-search">
+                        <form method="post" action="" @submit.prevent="sprice">
+                            <span>价格:</span>
+                            <input type="text"  placeholder="最低价格" v-model="first"/>
+                            <span>-元</span>
+                            <input type="text" placeholder="最高价格" v-model="ending"/>
+                            <span>元</span>
+                            <input type="submit" class="search-button" value="查询"/>
+                        </form>
+
+                    </div>
+                </div>
+                <div class="list-content">
+                    <div href="" class="list-item" v-for="goodsItem in goods.goodsList">
+                        <img v-bind:src="'static/uploads/'+goodsItem.img" alt="">
+                        <p>标题:{{goodsItem.title}}</p>
+                        <p>类别:{{goodsItem.categoryid.sort}}</p>
+                        <p>价格:{{goodsItem.price}}</p>
+                        <p>id:{{goodsItem.id}}</p>
+                        <button @click="purchaseDetails(goodsItem.id)"> 去购买</button>
+                    </div>
+
+                </div>
+                <div class="list-footer">
+                    <button @click="page(1)" v-bind:disabled="goods.page==1">首页</button>
+                    <button @click="page(goods.page-1)" v-bind:disabled="goods.page==1">上一页</button>
+                    <button @click="page(goods.page+1)" v-bind:disabled="goods.page==goods.pageCount">下一页</button>
+                    <button @click="page(goods.pageCount)" v-bind:disabled="goods.page==goods.pageCount">末页</button>
+                    <span>共{{goods.pageCount}}页</span>
+                    <span>{{goods.count}}条记录</span>
+                    <span>到第</span>
+                    <input type="text" v-model="number">
+                    <span>页</span>
+                    <button @click="page(number)" v-bind:disabled="number>goods.pageCount">确定</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!--    //以下都是没用的 装饰用的-->
+    <div class="cate w">
+        <div class="list">
+            <a href="" class="list-item">
+                <i class="iconfont icon-java"></i>
+                <span>食品</span>
+            </a>
+            <a href="" class="list-item"
+            ><i class="iconfont icon-h5"></i>生鲜</a
+            >
+            <a href="" class="list-item">
+                <i class="iconfont icon-python"></i>茶类
+            </a>
+            <a href="" class="list-item"
+            ><i class="iconfont icon-tianchongxing-"></i>水产</a
+            >
+            <a href="" class="list-item"
+            ><i class="iconfont icon-php_elephant"></i>水果</a
+            >
+            <a href="" class="list-item"
+            ><i class="iconfont icon-go"></i>艺术品</a
+            >
+        </div>
+        <a href="" class="img">
+            <img src="./static/uploads/cate4.jpg" alt=""/>
+        </a>
+        <a href="" class="img">
+            <img src="./static/uploads/cate5.jpg" alt=""/>
+        </a>
+        <a href="" class="img">
+            <img src="./static/uploads/cate6.jpg" alt=""/>
+        </a>
+    </div>
+    <div class="books">
+        <div class="w">
+            <div class="seckill">
+                <div class="seckill-header">
+                    <div class="title">
+                        商品秒杀
+                    </div>
+                    <!-- <i class="iconfont icon-huanyipi"></i> -->
+                </div>
+                <div class="seckill-content">
+
+                    <a href="" class="tip">
+                        <h5>距离结束还有</h5>
+                        <i class="iconfont icon-shandian"></i>
+                        <div class="downcount">
+                            <span class="time">00</span>
+                            <span class="token">:</span>
+                            <span class="time">00</span>
+                            <span class="token">:</span>
+                            <span class="time">00</span>
+                        </div>
+                    </a>
+
+
+                    <a href="" class="books-sec">
+                        <img src="./static/uploads/congwanqingdaominguo.jpg" alt="">
+                        <p>从晚晴到民国</p>
+                        <div>
+                            <span class="cur-price">￥28.9</span>
+                            <span class="pre-price">￥36.5</span>
+                        </div>
+                        <button>立即购买</button>
+                    </a>
+                    <a href="" class="books-sec">
+                        <img src="./static/uploads/cyuyanrumenjingdian.jpg" alt="">
+                        <p>c语言入门经典</p>
+                        <div>
+                            <span class="cur-price">￥55.9</span>
+                            <span class="pre-price">￥68.5</span>
+                        </div>
+                        <button>立即购买</button>
+                    </a>
+                    <a href="" class="books-sec">
+                        <img src="./static/uploads/fusang.jpg" alt="">
+                        <p>扶桑</p>
+                        <div>
+                            <span class="cur-price">￥30.9</span>
+                            <span class="pre-price">￥47.5</span>
+                        </div>
+                        <button>立即购买</button>
+                    </a>
+                    <a href="" class="books-sec">
+                        <img src="./static/uploads/geihaizideshi.jpg" alt="">
+                        <p>给孩子的诗</p>
+                        <div>
+                            <span class="cur-price">￥18.9</span>
+                            <span class="pre-price">￥25.5</span>
+                        </div>
+                        <button>立即购买</button>
+                    </a>
+
+
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bottom">
+        <div class="w">
+            <div class="top">
+                <ul>
+                    <li>
+                        <a href="">
+                            <img src="./static/img/bottom1.png" alt="">
+                            <span>品类齐全，轻松购物</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./static/img/bottom.png" alt="">
+                            <span>多仓直发，极速配送</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="">
+                            <img src="./static/img/bottom2.png" alt="">
+                            <span>天天低价，畅选无忧</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+            <div class="content">
+                <dl>
+                    <dt>支付方式</dt>
+                    <dd>在线支付</dd>
+                    <!-- <dd>名师团队</dd>
+                    <dd>学员心声</dd> -->
+                </dl>
+                <dl>
+                    <dt>售后服务</dt>
+                    <dd>价格保障</dd>
+                    <!-- <dd>资料下载</dd>
+                    <dd>工具下载</dd> -->
+                </dl>
+                <dl>
+                    <dt>加入我们</dt>
+                    <dd>招聘岗位</dd>
+                    <!-- <dd>岗位介绍</dd>
+                    <dd>招贤纳师</dd> -->
+                </dl>
+                <dl>
+                    <dt>联系我们</dt>
+                    <dd>理工学院知行苑2-615
+                    <dd>
+                </dl>
+            </div>
+        </div>
+        <div class="down">
+            厦门理工软件工程学院.Copyright ©2015
+        </div>
+    </div>
+
+
+</div>
+
+<script src="./static/script/swiper.min.js"></script>
+<script>
+
+</script>
+</body>
+</html>

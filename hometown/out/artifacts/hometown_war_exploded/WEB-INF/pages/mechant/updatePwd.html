@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>完善资料</title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bookManger.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/register.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/book_edit.css}"/>
+    <base th:href="@{/}">
+</head>
+<body>
+
+<div class="login_banner" style="background-color: #ece3e3;">
+    <div class="register_form" >
+
+
+        <form th:action="@{/merchant.do(operate='updatePwd')}" method="post" >
+            <input type="hidden" name="id" th:value="${session.currMerchant.id}" />
+            <div class="form-item">
+                <div>
+                    <label>旧密码:</label>
+                    <input type="text" name="oldPwd" />
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>新密码:</label>
+                    <input type="" name="newPwd" />
+                </div>
+            </div>
+            <button class="btn" type="submit">提交</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

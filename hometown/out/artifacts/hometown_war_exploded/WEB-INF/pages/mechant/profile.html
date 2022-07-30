@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>完善资料</title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bookManger.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/register.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/book_edit.css}"/>
+    <base th:href="@{/}">
+</head>
+<body>
+
+<div class="login_banner" style="background-color: #ece3e3;">
+    <div class="register_form" >
+
+
+        <form th:action="@{/merchant.do(operate='updateProfile')}" method="post" enctype="multipart/form-data">
+            <input type="hidden" name="id" th:value="${session.currMerchant.id}" />
+            <div class="form-item">
+                <div>
+                    <label>店铺头像:</label>
+                    <input type="file" name="photo"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>店名:</label>
+                    <input type="text" name="mname" th:value="${session.currMerchant.mname}"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>简介:</label>
+                    <input type="" name="mintro" th:value="${session.currMerchant.mintro}"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>账号:</label>
+                    <input disabled type="" name="munmae" th:value="${session.currMerchant.muname}"/>
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>密码:</label>
+                    <input type="" name="mpwd" th:value="${session.currMerchant.mpwd}"/>
+
+                </div>
+            </div>
+            <div class="form-item">
+                <div>
+                    <label>邮箱:</label>
+                    <input type="" name="email" th:value="${session.currMerchant.email}"/>
+                </div>
+            </div>
+            <button class="btn" type="submit">提交</button>
+        </form>
+
+    </div>
+</div>
+
+</body>
+</html>

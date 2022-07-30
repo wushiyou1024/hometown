@@ -1,0 +1,62 @@
+
+/* 必要布局样式css */
+.rolling {
+    width: 250px;
+    position: relative;
+    /*left: 20px;*/
+    overflow: hidden;
+    /*background: #00f7de;*/
+}
+
+.rolling .roll-title {
+    overflow: hidden;
+    height: 30px;
+    /*background: #fff;*/
+    padding: 0 10px;
+    line-height: 30px;
+    border-bottom: 1px solid #0c0c0c;
+}
+
+
+.rolling .roll-title ul {
+    float: right;
+    overflow: hidden;
+    zoom:1;
+    margin-top: 5px;
+}
+
+.rolling .content {
+    width: 300px;
+    height: 70px;
+    overflow: hidden;
+    padding-left: 10px;
+    /*padding-right: 10px;*/
+}
+
+.rolling .content ul {
+    overflow: hidden;
+    zoom:1; }
+
+.rolling .content ul li {
+    float: left;
+    /*height: 60px;*/
+
+    /*line-height: 24px;*/
+    height: 65px;
+    line-height: 20px;
+    text-align: left;
+    _display: inline;
+    font-size: 13px;
+    margin-top: 5px;
+
+}
+
+.rolling .content ul li span {
+    color: #0c0c0c;
+    position: relative;
+    bottom: -5px;
+
+
+
+    right: -120px;
+}

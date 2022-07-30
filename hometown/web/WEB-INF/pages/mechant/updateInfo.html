@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link rel="stylesheet" th:href="@{/static/css/register.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/book_edit.css}"/>
+  <link rel="stylesheet" th:href="@{/static/css/bookManger.css}"/>
+  <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
+    <style>
+        .black_overlay {
+            display: block;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index: 1001;
+            -moz-opacity: 0.8;
+            opacity: .80;
+            filter: alpha(opacity=88);
+        }
+
+        .white_content {
+            display: block;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 55%;
+            height: 55%;
+            padding: 20px;
+            border: 5px solid #0c8c57;
+            background-color: white;
+            z-index: 1002;
+            overflow: auto;
+        }
+    </style>
+  <script>
+    function closeinfor() {
+      window.location.href='page.do?operate=page&page=mechant/infor';
+
+    }
+  </script>
+</head>
+<body>
+<div id="light" class="white_content">
+  <i class="layui-icon layui-icon-close" style="font-size: 40px;" onclick="closeinfor()" ></i>
+  <div class="login_banner" style="background-color: #ece3e3;">
+    <div class="register_form" style="height: 100%;width: 100%">
+
+      <form  th:action="@{/merchant.do(operate='updateInfo')}"  method="post">
+           <input type="hidden" name="id" th:value="${session.thisInfor.id}">
+        <input type="hidden" name="mid" th:value="${session.currMerchant.id}">
+        <div class="form-item">
+          <div>
+            <label>id:</label>
+            <input disabled type="text"  th:value="${session.thisInfor.id}" />
+          </div>
+        </div>
+        <div class="form-item">
+          <div>
+            <label>内容:</label>
+            <input  type="text" name="content" th:value="${session.thisInfor.content}"/>
+          </div>
+        </div>
+
+        <button class="btn" type="submit">提交</button>
+      </form>
+
+    </div>
+  </div>
+
+</div>
+<div id="fade" class="black_overlay"></div>
+</body>
+</html>

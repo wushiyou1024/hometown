@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title></title>
+    <link rel="stylesheet" th:href="@{/static/css/minireset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/common.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/cart.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/bookManger.css}"/>
+    <link rel="stylesheet" th:href="@{/static/layui/css/layui.css}"/>
+    <script language="JavaScript" th:src="@{/static/script/vue.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/adminGoodsManager.js}"></script>
+
+</head>
+<body>
+ <div style="width: 200px;
+        height: 200px;
+        background-color: red;
+        display: none;
+        position: absolute;" id="alert_box"></div>
+<div class="list" id="goods">
+    <div class="w">
+
+        <table>
+            <thead>
+            <tr>
+                <th>商家ID</th>
+                <th>图片</th>
+                <th>标题</th>
+                <th>内容</th>
+                <th>价格</th>
+                <th>类别</th>
+                <th>库存</th>
+                <th>操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="goodsItem in goods.goodsList">
+                <td>{{goodsItem.mid.id}}</td>
+                <td>
+                    <img v-bind:src="'static/uploads/'+goodsItem.img" alt="">
+                </td>
+                <td>{{goodsItem.title}}</td>
+                <td>
+                    {{goodsItem.detail_content}}
+                </td>
+
+                <td>
+                    {{goodsItem.price}}
+                </td>
+                <td>
+                    {{goodsItem.categoryid.sort}}
+                </td>
+
+                <td>
+                    {{goodsItem.sum}}
+                </td>
+                <td>
+                    <button  @click="deleteById(goodsItem.id)" type="button" class="layui-btn"><i class="layui-icon layui-icon-delete" style="font-size: 30px; ">下架</i></button>
+
+                </td>
+            </tr>
+
+            </tbody>
+        </table>
+        <div class="footer">
+            <div class="footer-right" style="font-size: 8px">
+                <button @click="page(1)" v-bind:disabled="goods.page==1">首页</button>
+                <button @click="page(goods.page-1)" v-bind:disabled="goods.page==1">上一页</button>
+                <button @click="page(goods.page+1)" v-bind:disabled="goods.page==goods.pageCount">下一页</button>
+                <button @click="page(goods.pageCount)" v-bind:disabled="goods.page==goods.pageCount">末页</button>
+                <span>共{{goods.pageCount}}页</span>
+                <span>{{goods.count}}条记录</span>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+</html>

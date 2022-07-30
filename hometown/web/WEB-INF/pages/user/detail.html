@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>电商特产-商品详情页</title>
+    <link rel="stylesheet" th:href="@{/static/css/reset.css}"/>
+    <link rel="stylesheet" th:href="@{/static/css/main.css}"/>
+<!--    <script type="text/javascript" th:src="js/jquery-1.12.4.min.js"></script>-->
+    <script language="JavaScript" th:src="@{/static/script/vue.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/axios.min.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/goodsDetail.js}"></script>
+    <script language="JavaScript" th:src="@{/static/script/home.js}"></script>
+</head>
+<body>
+
+<div class="header_con">
+    <div class="header">
+        <div class="welcome">厦门理工家乡味商城系统!</div>
+        <div class="user_login">
+            <a href="">登录</a>
+            <span>|</span>
+            <a href="">注册</a>
+            <span>|</span>
+            <a href="">我的购物车</a>
+            <span>|</span>
+            <a href="">我的订单</a>
+        </div>
+    </div>
+</div>
+<div class="search_bar clearfix">
+    <a href="#" class="logo fl" th:href="@{/page.do(operate='page',page='mechant/mpage.html')}">
+
+        <img style="border-radius: 50%;width: 75px;margin-top: 10px;margin-left: 50px"
+             th:src="@{|/static/uploads/${session.goodsByid.mid.mimg}|}">
+        <h1 style="margin-left: 40px" th:text="${session.goodsByid.mid.mname}"></h1></a>
+    <div class="search_con fl">
+
+        <form method="post" action="" @submit.prevent="submit">
+            <input class="input_text fl" type="text" placeholder="请输入你需要的商品名称 如：茶" v-model="keyword"/>
+            <input type="submit" class="input_btn fr" value="搜索"/>
+        </form>
+    </div>
+    <div class="guest_card fr">
+        <a href="#" class="card_name fl">我的购物车</a>
+        <div class="goods_count fl">1</div>
+    </div>
+</div>
+<!-- 商品信息栏 -->
+<div class="navbar_con">
+    <div class="navbar clearfix">
+        <div class="subnav_con fl">
+            <h1>商品详细信息 <i></i></h1>
+        </div>
+        <ul class="navlist fl">
+            <li><a  class="cart iconfont icon-gouwuche">欢迎光临</a></li>
+
+        </ul>
+    </div>
+</div>
+<div class="submena clearfix">
+    <a th:href="@{/page.do(operate='page',page='index')}">首页</a>
+
+</div>
+<div id="content_tile">
+
+    <div class="main_menu fl"><img style="padding-left: 200px;margin-top: 100px"
+                                   th:src="@{|/static/uploads/${session.goodsByid.img}|}"></div>
+    <form th:action="@{/cart.do(operate='addCart')}" method="post">
+        <input type="hidden" name="uid" th:value="${session.currUser.id}">
+        <input type="hidden" name="gid" th:value="${session.goodsByid.id}">
+        <input type="hidden" name="price" th:value="${session.goodsByid.price}">
+        <input type="hidden" name="img" th:value="${session.goodsByid.img}">
+        <input type="hidden" name="title" th:value="${session.goodsByid.title}">
+        <input type="hidden" name="mid" th:value="${session.goodsByid.mid.getId()}">
+        <input type="hidden" name="cid" th:value="${session.goodsByid.categoryid}">
+        <input type="hidden" name="goodscontent" th:value="${session.goodsByid.detail_content}">
+        <input type="hidden" name="sum" th:value="${session.goodsByid.sum}">
+        <div style="padding-right: 100px" class="goods_detail_list fr">
+            <h3 id="ftitle" th:text="${session.goodsByid.title}"></h3>
+            <p th:text="${session.goodsByid.detail_content}"></p>
+            <p th:text="${session.goodsByid.id}"></p>
+            <div class="prize_bar">
+                <div class="show_prize fl" id="singleprice">￥<em th:text="${session.goodsByid.price}"></em></div>
+                <div class="show_unit fl">剩余库存：<em th:text="${session.goodsByid.getSum()}"></em></div>
+            </div>
+            <div class="goods_num clearfix">
+                <div class="num_name fl">数量：</div>
+                <div class="num_add fl" id="pricecontent">
+                    <input type="number" min="1" name="goodsCount" id="buygoodscount" class="num_show fl" value="1">
+
+                </div>
+            </div>
+
+<div  th:text="${session.attention}">
+</div>
+            <div class="operate_btn">
+                <a href="" class="buy_btn">立即购买</a>
+                <input type="submit" class="add_cart" value="加入购物车">加入购物车</input>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
